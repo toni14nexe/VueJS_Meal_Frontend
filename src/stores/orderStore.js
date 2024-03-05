@@ -12,7 +12,7 @@ export const orderStore = defineStore('orderStore', {
         };
         await $axios.post('orders', request);
         ElNotification({
-          message: 'Order created succesfully',
+          message: 'Order created successfully',
           duration: 5000,
           type: 'success',
         });

@@ -3,7 +3,7 @@ import { onBeforeMount, ref, computed } from 'vue';
 import { checkAdminAuthorization } from '../../modules/authorization';
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
 import { router } from '../../main';
-import { adminStore } from '../../stores/admin';
+import { adminStore } from '../../stores/adminStore';
 
 const storeAdmin = adminStore();
 const loginData = ref({
