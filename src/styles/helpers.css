@@ -1,0 +1,35 @@
+.mt-1 {
+  margin-top: 0.25rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.ml-4 {
+  margin-left: 1rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.zinc-text {
+  color: var(--secondary-text-color);
+}
+
+.text-bold {
+  font-weight: 600;
+}

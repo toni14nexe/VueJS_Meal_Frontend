@@ -1,11 +1,13 @@
 <script setup>
-import MainPage from "../components/MainPage.vue"
-
+import UserLayout from '../layouts/UserLayout.vue';
+import MainPage from '../components/MainPage.vue';
 </script>
 
 <template>
-  <MainPage />
+  <UserLayout>
+    <template #default> <MainPage /> </template>
+  </UserLayout>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
+../components/MainPage.vue
