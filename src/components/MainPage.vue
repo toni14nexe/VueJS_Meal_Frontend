@@ -52,7 +52,11 @@ const sortByOptions = [
 ];
 
 onMounted(() => {
-  if (router.currentRoute.value.query.filter === null)
+  console.log(router.currentRoute.value.query.filter);
+  if (
+    router.currentRoute.value.query.filter === null ||
+    router.currentRoute.value.query.filter === undefined
+  )
     selectedFilters.value = [];
   else
     selectedFilters.value = router.currentRoute.value.query.filter.split(',');
