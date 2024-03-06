@@ -44,33 +44,35 @@ function logout() {
     </el-row>
 
     <el-row>
-      <el-affix :offset="50" class="affix container">
-        <el-row>
-          <el-link
-            :class="{
-              active: routeName === 'backoffice-drinks',
-            }"
-            @click="goTo('backoffice/drinks')"
-          >
-            <h4>Drinks</h4>
-          </el-link>
-        </el-row>
-        <el-row>
-          <el-link
-            :class="{ active: routeName === 'backoffice-menus' }"
-            @click="goTo('backoffice/menus')"
-          >
-            <h4>Menus</h4>
-          </el-link>
-        </el-row>
-        <el-row>
-          <el-link
-            :class="{ active: routeName === 'backoffice-orders' }"
-            @click="goTo('backoffice/orders')"
-          >
-            <h4>Orders</h4>
-          </el-link>
-        </el-row>
+      <el-affix :offset="20" class="affix">
+        <div class="affix-container">
+          <el-row>
+            <el-link
+              :class="{
+                active: routeName === 'backoffice-drinks',
+              }"
+              @click="goTo('backoffice/drinks')"
+            >
+              <span class="font-weight-7">Drinks</span>
+            </el-link>
+          </el-row>
+          <el-row>
+            <el-link
+              :class="{ active: routeName === 'backoffice-menus' }"
+              @click="goTo('backoffice/menus')"
+            >
+              <span class="font-weight-7">Menus</span>
+            </el-link>
+          </el-row>
+          <el-row>
+            <el-link
+              :class="{ active: routeName === 'backoffice-orders' }"
+              @click="goTo('backoffice/orders')"
+            >
+              <span class="font-weight-7">Orders</span>
+            </el-link>
+          </el-row>
+        </div>
       </el-affix>
 
       <div
@@ -92,8 +94,14 @@ function logout() {
   width: 20%;
 }
 
+.affix-container {
+  background-color: white;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
 .main-container {
-  width: calc(80% - 9rem);
+  width: calc(80% - 5rem);
   height: fit-content;
 }
 </style>

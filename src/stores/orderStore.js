@@ -20,5 +20,13 @@ export const orderStore = defineStore('orderStore', {
         showErrorToast(error);
       }
     },
+
+    async getAllOrders() {
+      try {
+        return await $axios.get('orders');
+      } catch (error) {
+        showErrorToast(error);
+      }
+    },
   },
 });

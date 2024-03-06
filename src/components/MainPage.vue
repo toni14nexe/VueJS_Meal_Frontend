@@ -52,7 +52,6 @@ const sortByOptions = [
 ];
 
 onMounted(() => {
-  console.log(router.currentRoute.value.query.filter);
   if (
     router.currentRoute.value.query.filter === null ||
     router.currentRoute.value.query.filter === undefined
@@ -392,86 +391,90 @@ watch(
   </div>
 
   <el-affix :offset="50" class="affix">
-    <el-row class="ml-4 mb-2">
-      <AirplaneIcon style="width: 25px; height: 25px" />
-      <span class="text-bold ml-2">Select meal</span>
-    </el-row>
-    <div class="affix-container">
-      <el-row class="affix-field">
-        <div>Riga - St Petersburg</div>
-        <div class="menu-card-small-text zinc-text">
-          Flight duration: 3h 40min
-        </div>
+    <div class="affix-main-container">
+      <el-row class="ml-4 mb-2">
+        <AirplaneIcon style="width: 25px; height: 25px" />
+        <span class="text-bold ml-2">Select meal</span>
       </el-row>
-      <el-row
-        v-for="order in orders"
-        class="affix-field"
-        justify="space-between"
-        :class="{ 'selected-passenger': selectedPassenger === order.passenger }"
-        @click="selectedPassenger = order.passenger"
-      >
-        <div class="menu-card-small-text">{{ order.passenger }}</div>
+      <div class="flight-passengers-container">
+        <el-row class="affix-field">
+          <div>Riga - St Petersburg</div>
+          <div class="menu-card-small-text zinc-text">
+            Flight duration: 3h 40min
+          </div>
+        </el-row>
+        <el-row
+          v-for="order in orders"
+          class="affix-field"
+          justify="space-between"
+          :class="{
+            'selected-passenger': selectedPassenger === order.passenger,
+          }"
+          @click="selectedPassenger = order.passenger"
+        >
+          <div class="menu-card-small-text">{{ order.passenger }}</div>
+          <el-tooltip
+            effect="light"
+            placement="top"
+            :content="`Menu: ${order.menuTitle}`"
+            :disabled="!order.menuId"
+          >
+            <div
+              class="menu-card-small-text zinc-text"
+              :class="{ 'selected-order': order.menuId }"
+            >
+              {{
+                order.menuId
+                  ? 'Selected'
+                  : selectedPassenger === order.passenger
+                  ? 'Select'
+                  : 'Not selected'
+              }}
+            </div>
+          </el-tooltip>
+        </el-row>
+      </div>
+      <el-row class="mt-2" justify="end">
         <el-tooltip
           effect="light"
-          placement="top"
-          :content="`Menu: ${order.menuTitle}`"
-          :disabled="!order.menuId"
+          placement="bottom"
+          content="Remove last passenger"
         >
-          <div
-            class="menu-card-small-text zinc-text"
-            :class="{ 'selected-order': order.menuId }"
+          <el-icon :size="25" class="primary-icon" @click="removePassenger">
+            <RemoveFilled />
+          </el-icon>
+        </el-tooltip>
+        <el-tooltip effect="light" placement="bottom" content="Add passenger">
+          <el-icon :size="25" class="primary-icon ml-2" @click="addPassenger">
+            <CirclePlusFilled />
+          </el-icon>
+        </el-tooltip>
+      </el-row>
+      <el-row>
+        <div class="menu-card-small-text ml-4 mt-2">
+          Total for all passengers:
+        </div>
+        <span class="text-bold mt-1 ml-2">{{ totalBigPrice }}</span>
+        <sup class="small-price text-bold mt-1">{{ totalSmallPrice }}</sup>
+        <span class="mt-1 ml-2">€</span>
+      </el-row>
+      <el-row justify="center">
+        <el-tooltip
+          effect="light"
+          placement="bottom"
+          content="Must select menu for all passengers"
+          :disabled="allOrdersHaveMenuId"
+        >
+          <el-button
+            :disabled="!allOrdersHaveMenuId"
+            class="mt-2"
+            @click="submitOrder"
           >
-            {{
-              order.menuId
-                ? 'Selected'
-                : selectedPassenger === order.passenger
-                ? 'Select'
-                : 'Not selected'
-            }}
-          </div>
+            Submit
+          </el-button>
         </el-tooltip>
       </el-row>
     </div>
-    <el-row class="mt-2" justify="end">
-      <el-tooltip
-        effect="light"
-        placement="bottom"
-        content="Remove last passenger"
-      >
-        <el-icon :size="25" class="primary-icon" @click="removePassenger">
-          <RemoveFilled />
-        </el-icon>
-      </el-tooltip>
-      <el-tooltip effect="light" placement="bottom" content="Add passenger">
-        <el-icon :size="25" class="primary-icon ml-2" @click="addPassenger">
-          <CirclePlusFilled />
-        </el-icon>
-      </el-tooltip>
-    </el-row>
-    <el-row>
-      <div class="menu-card-small-text ml-4 mt-2">
-        Total for all passengers:
-      </div>
-      <span class="text-bold mt-1 ml-2">{{ totalBigPrice }}</span>
-      <sup class="small-price text-bold mt-1">{{ totalSmallPrice }}</sup>
-      <span class="mt-1 ml-2">€</span>
-    </el-row>
-    <el-row justify="center">
-      <el-tooltip
-        effect="light"
-        placement="bottom"
-        content="Must select menu for all passengers"
-        :disabled="allOrdersHaveMenuId"
-      >
-        <el-button
-          :disabled="!allOrdersHaveMenuId"
-          class="mt-2"
-          @click="submitOrder"
-        >
-          Submit
-        </el-button>
-      </el-tooltip>
-    </el-row>
   </el-affix>
 </template>
 
@@ -543,10 +546,14 @@ watch(
   width: 20%;
 }
 
-.affix-container {
-  margin-left: 1rem;
+.flight-passengers-container {
   background-color: white;
   border-radius: 5px;
+}
+
+.affix-main-container {
+  border-radius: 5px;
+  padding-left: 1rem;
 }
 
 .affix-field {

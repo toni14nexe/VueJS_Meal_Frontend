@@ -16,6 +16,9 @@
 .ml-4 {
   margin-left: 1rem;
 }
+.ml-6 {
+  margin-left: 1.5rem;
+}
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -37,6 +40,18 @@
   font-weight: 600;
 }
 
-.font-weight-500 {
+.text-small {
+  font-size: small;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.font-weight-5 {
   font-weight: 500;
+}
+
+.font-weight-7 {
+  font-weight: 700;
 }
