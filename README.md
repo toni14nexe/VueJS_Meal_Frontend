@@ -1,4 +1,24 @@
-# Vue 3 project template in Vite
+# Meal order appliaction frontend
+
+## Description
+
+## User story
+
+- One person can order one menu
+- One order request can contain few persons/menus
+- Menu must have main course and can have appetizer and/or dessert
+- Every menu can have more drinks to choose with
+- Choosing menu must have pagination and sorting and can be filtered by type
+
+## Admin story
+
+- Application must have `back-office` for admin management
+
+### Management
+
+- Drink management
+- Menu management
+- Order management
 
 ## Installation
 
@@ -13,7 +33,7 @@ Run: `npm install`
 - BASE_URL = `<your web app url, default: http://localhost:5000>`
 - API_URL = `<your API url for Axios>`
 
-2. Run project: `npm run devv`
+2. Run project: `npm run dev`
 
 ### Run ESLint
 

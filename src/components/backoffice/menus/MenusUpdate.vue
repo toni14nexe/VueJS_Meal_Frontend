@@ -89,12 +89,14 @@ function update() {
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="menu in menus"
-            @click="handleMenuSelect(menu)"
-          >
-            {{ menu.title }}
-          </el-dropdown-item>
+          <el-scrollbar height="300px">
+            <el-dropdown-item
+              v-for="menu in menus"
+              @click="handleMenuSelect(menu)"
+            >
+              {{ menu.title }}
+            </el-dropdown-item>
+          </el-scrollbar>
         </el-dropdown-menu>
       </template>
     </el-dropdown>

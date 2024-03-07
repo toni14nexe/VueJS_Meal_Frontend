@@ -101,6 +101,7 @@ function setFilter(filterValue) {
     else selectedFilters.value.splice(index, 1);
   }
 
+  query.value.page = 1;
   setQuery();
 }
 
