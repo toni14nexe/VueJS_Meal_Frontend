@@ -3,20 +3,26 @@ import { onMounted, ref } from 'vue';
 import { orderStore } from '../../../stores/orderStore';
 import HorizontalLine from '../../HorizontalLine.vue';
 
-const storeDrink = orderStore();
+const storeOrder = orderStore();
 const orders = ref([]);
 const isLoading = ref(true);
 
-onMounted(() => {
-  storeDrink.getAllOrders().then((response) => {
+onMounted(() => getAllOrders());
+
+function getAllOrders() {
+  storeOrder.getAllOrders().then((response) => {
     orders.value = response.data.data;
     isLoading.value = false;
   });
-});
+}
 
 function getDateTime(dateTime) {
   const isoDateTime = new Date(dateTime);
   return `${isoDateTime.toLocaleDateString()} at ${isoDateTime.toLocaleTimeString()}`;
+}
+
+function deleteOrder(orderId) {
+  storeOrder.deleteOrder(orderId).then(() => getAllOrders());
 }
 </script>
 
@@ -24,9 +30,16 @@ function getDateTime(dateTime) {
   <div v-if="!isLoading" class="mt-4">
     <div v-for="order in orders" class="mt-4">
       <HorizontalLine />
-      <el-row class="ml-6 zinc-text text-small">
-        Passengers: {{ order.menu.length }} -
-        {{ getDateTime(order.createdAt) }} - ID: {{ order.id }}
+      <el-row class="ml-6 zinc-text text-small" justify="space-between">
+        <span>
+          Passengers: {{ order.menu.length }} -
+          {{ getDateTime(order.createdAt) }} - ID: {{ order.id }}
+        </span>
+        <span>
+          <el-button type="danger" plain @click="deleteOrder(order.id)"
+            >Delete</el-button
+          >
+        </span>
       </el-row>
       <div v-for="menu in order.menu" class="mt-4">
         <el-row>

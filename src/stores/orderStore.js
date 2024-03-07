@@ -28,5 +28,18 @@ export const orderStore = defineStore('orderStore', {
         showErrorToast(error);
       }
     },
+
+    async deleteOrder(orderId) {
+      try {
+        await $axios.delete(`orders/${orderId}`);
+        ElNotification({
+          message: 'Order deleted successfully',
+          duration: 5000,
+          type: 'success',
+        });
+      } catch (error) {
+        showErrorToast(error);
+      }
+    },
   },
 });
