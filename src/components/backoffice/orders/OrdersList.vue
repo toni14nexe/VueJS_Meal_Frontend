@@ -10,7 +10,6 @@ const isLoading = ref(true);
 onMounted(() => {
   storeDrink.getAllOrders().then((response) => {
     orders.value = response.data.data;
-    console.log(orders.value);
     isLoading.value = false;
   });
 });
@@ -26,7 +25,8 @@ function getDateTime(dateTime) {
     <div v-for="order in orders" class="mt-4">
       <HorizontalLine />
       <el-row class="ml-6 zinc-text text-small">
-        Passengers: {{ order.menu.length }} - {{ getDateTime(order.createdAt) }}
+        Passengers: {{ order.menu.length }} -
+        {{ getDateTime(order.createdAt) }} - ID: {{ order.id }}
       </el-row>
       <div v-for="menu in order.menu" class="mt-4">
         <el-row>
@@ -62,18 +62,6 @@ function getDateTime(dateTime) {
     </div>
     <HorizontalLine />
   </div>
-
-  <!-- <el-row>
-          <el-row class="ml-4 font-weight-5">{{ drink.title }}</el-row>
-          <el-row class="ml-4 zinc-text">{{ `ID: ${drink.id}` }} </el-row>
-          <el-row class="ml-4 zinc-text">
-            {{ `Updated: ${getDateTime(drink.updatedAt)}` }}
-          </el-row>
-          <el-row class="ml-4">
-            <a :href="drink.imageUrl" target="_blank">{{ drink.imageUrl }}</a>
-          </el-row>
-        </el-col>
-      </el-row> -->
 </template>
 
 <style scoped>

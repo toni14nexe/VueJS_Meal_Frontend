@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { drinkStore } from '../../../stores/drinkStore';
 import { ArrowDown } from '@element-plus/icons-vue';
 
@@ -18,23 +18,33 @@ function getDrinks() {
   });
 }
 
+const isValid = computed(() => {
+  if (
+    selectedDrink.value.title.length > 3 &&
+    selectedDrink.value.imageUrl.length > 7
+  )
+    return true;
+  return false;
+});
+
 function handleDrinkSelect(drink) {
   selectedDrink.value = drink;
   selectedDrink.value.oldTitle = drink.title;
 }
 
 function update() {
-  storeDrink.updateDrink(selectedDrink.value).then(() => {
-    selectedDrink.value = undefined;
-    getDrinks();
-  });
+  if (isValid.value)
+    storeDrink.updateDrink(selectedDrink.value).then(() => {
+      selectedDrink.value = undefined;
+      getDrinks();
+    });
 }
 </script>
 
 <template>
   <div v-if="!isLoading" class="mt-4">
     <el-dropdown>
-      <el-button type="primary" plain>
+      <el-button type="primary" plain style="width: 300px">
         {{ selectedDrink?.oldTitle || 'Select drink' }}
         <el-icon class="el-icon--right"><ArrowDown /></el-icon>
       </el-button>
@@ -71,7 +81,7 @@ function update() {
         <el-image class="image" :src="selectedDrink.imageUrl" fit="fill" />
       </el-row>
       <el-row justify="center" class="row">
-        <el-button @click="update">Update</el-button>
+        <el-button :disabled="!isValid" @click="update">Update</el-button>
       </el-row>
     </div>
   </div>

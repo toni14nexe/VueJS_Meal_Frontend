@@ -34,15 +34,15 @@ const orders = ref([
   },
 ]);
 const filters = ref([
-  { title: 'Pork', value: 'pork' },
-  { title: 'Seafood', value: 'seafood' },
-  { title: 'Chicken', value: 'chicken' },
-  { title: 'Beef', value: 'beef' },
-  { title: 'Vegeterian', value: 'vegeterian' },
-  { title: 'Celebrate on board', value: 'celebrate' },
-  { title: 'Kosher', value: 'kosher' },
-  { title: 'Kids menu', value: 'kids' },
-  { title: 'Breakfast', value: 'breakfast' },
+  'Pork',
+  'Seafood',
+  'Chicken',
+  'Beef',
+  'Vegeterian',
+  'Celebrate',
+  'Kosher',
+  'Kids',
+  'Breakfast',
 ]);
 const sortByOptions = [
   { name: 'Title', value: 'title' },
@@ -264,11 +264,11 @@ watch(
 
         <el-tag
           v-for="filter in filters"
-          :effect="isFilterSelected(filter.value) ? 'dark' : 'plain'"
-          :class="{ 'el-tag-revert': isFilterSelected(filter.value) }"
-          @click="setFilter(filter.value)"
+          :effect="isFilterSelected(filter) ? 'dark' : 'plain'"
+          :class="{ 'el-tag-revert': isFilterSelected(filter) }"
+          @click="setFilter(filter)"
         >
-          <h4>{{ filter.title }}</h4>
+          <h4>{{ filter }}</h4>
         </el-tag>
       </el-space>
 
@@ -311,67 +311,78 @@ watch(
 
       <div class="menu-card" v-for="menu in menusData?.data">
         <el-row>
-          <el-image class="menu-card-image" :src="menu.imageUrl" fit="fill" />
-          <div class="menu-card-text-container">
-            <span class="menu-card-small-text zinc-text">
-              {{ getMenuDescription(menu) }}
-            </span>
-            <br />
-            <span class="text-bold">{{ menu.title }}</span> <br />
-            <div v-if="menu.starter">
-              <span class="menu-card-small-text text-bold"> Starter: </span>
+          <el-col :span="6" align="start">
+            <el-image class="menu-card-image" :src="menu.imageUrl" fit="fill" />
+          </el-col>
+          <el-col :span="14">
+            <div class="menu-card-text-container">
               <span class="menu-card-small-text zinc-text">
-                {{ menu.starter }}
+                {{ getMenuDescription(menu) }}
               </span>
               <br />
-            </div>
-            <div v-if="menu.desert">
-              <span class="menu-card-small-text text-bold"> Desert: </span>
-              <span class="menu-card-small-text zinc-text">{{
-                menu.desert
-              }}</span>
-              <br />
-            </div>
-            <span
-              v-if="menu.drink.length"
-              class="menu-card-small-text text-bold"
-            >
-              Selected drink:
-            </span>
-            <span
-              v-if="menu.drink.length"
-              class="menu-card-small-text zinc-text"
-            >
-              {{ menu.selectedDrink.title }}
-            </span>
-            <br />
-            <div class="menu-card-drink-images-container">
-              <div v-if="menu.drink.length">
-                <el-image
-                  v-for="drink in menu.drink"
-                  class="menu-card-drink-image"
-                  :class="{
-                    'selected-drink': menu.selectedDrink.title === drink.title,
-                  }"
-                  :src="drink.imageUrl"
-                  fit="fill"
-                  @click="menu.selectedDrink = drink"
-                />
-              </div>
-              <span v-else></span>
-              <div class="price-select-wrapper">
-                <span class="text-bold">{{ getBigPrice(menu.price) }}</span>
-                <sup class="small-price text-bold">
-                  {{ getSmallPrice(menu.price) }}
-                </sup>
-                €
+              <span class="text-bold">{{ menu.title }}</span> <br />
+              <div v-if="menu.starter">
+                <span class="menu-card-small-text text-bold"> Starter: </span>
+                <span class="menu-card-small-text zinc-text">
+                  {{ menu.starter }}
+                </span>
                 <br />
-                <el-button @click="menuSelect(menu)" class="mt-2">
-                  Select
-                </el-button>
+              </div>
+              <div v-if="menu.desert">
+                <span class="menu-card-small-text text-bold"> Desert: </span>
+                <span class="menu-card-small-text zinc-text">{{
+                  menu.desert
+                }}</span>
+                <br />
+              </div>
+              <span
+                v-if="menu.drink.length"
+                class="menu-card-small-text text-bold"
+              >
+                Selected drink:
+              </span>
+              <span
+                v-if="menu.drink.length"
+                class="menu-card-small-text zinc-text"
+              >
+                {{ menu.selectedDrink.title }}
+              </span>
+              <br />
+              <div class="menu-card-drink-images-container">
+                <div v-if="menu.drink.length">
+                  <el-image
+                    v-for="drink in menu.drink"
+                    class="menu-card-drink-image"
+                    :class="{
+                      'selected-drink':
+                        menu.selectedDrink.title === drink.title,
+                    }"
+                    :src="drink.imageUrl"
+                    fit="fill"
+                    @click="menu.selectedDrink = drink"
+                  />
+                </div>
+                <span v-else></span>
               </div>
             </div>
-          </div>
+          </el-col>
+          <el-col
+            :span="4"
+            align="end"
+            style="margin-bottom: 0; margin-top: auto"
+          >
+            <div class="price-select-wrapper">
+              <span class="text-bold">{{ getBigPrice(menu.price) }}</span>
+              <sup class="small-price text-bold">
+                {{ getSmallPrice(menu.price) }}
+              </sup>
+              €
+              <br />
+              <el-button @click="menuSelect(menu)" class="mt-2">
+                Select
+              </el-button>
+            </div>
+          </el-col>
         </el-row>
         <HorizontalLine />
       </div>
